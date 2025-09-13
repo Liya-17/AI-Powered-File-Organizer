@@ -110,23 +110,31 @@ const Chatbot: React.FC = () => {
       {/* Chatbot Button */}
       <button
         onClick={toggleChatbot}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-primary-600 text-white rounded-full shadow-lg hover:bg-primary-700 transition-all duration-300 hover:scale-110 z-50"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br from-primary-600 to-primary-700 text-white rounded-full shadow-xl hover:shadow-2xl hover:scale-110 transition-all duration-300 flex items-center justify-center z-50 animate-bounce"
       >
-        <MessageCircle className="w-6 h-6 mx-auto" />
+        <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7" />
       </button>
 
       {/* Chatbot Container */}
       {state.chatbotOpen && (
-        <div className="fixed bottom-24 right-6 w-80 h-96 bg-white rounded-lg shadow-xl border border-gray-200 z-50 flex flex-col">
+        <div className="fixed bottom-20 right-4 sm:bottom-24 sm:right-6 w-72 sm:w-80 h-80 sm:h-96 bg-white rounded-xl shadow-2xl border border-gray-200 z-50 flex flex-col animate-slideInUp">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-primary-600 text-white rounded-t-lg">
-            <div className="flex items-center space-x-2">
-              <Bot className="w-5 h-5" />
-              <h3 className="font-semibold">FileOrganizer AI</h3>
+          <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-t-xl">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                <Bot className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-bold">FileOrganizer AI</h3>
+                <div className="flex items-center space-x-1">
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  <p className="text-xs text-primary-100">Online</p>
+                </div>
+              </div>
             </div>
             <button
               onClick={toggleChatbot}
-              className="p-1 hover:bg-primary-700 rounded transition-colors"
+              className="p-1 hover:bg-white hover:bg-opacity-20 rounded-full transition-all duration-200 hover:scale-110"
             >
               <X className="w-4 h-4" />
             </button>

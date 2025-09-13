@@ -99,28 +99,34 @@ const Dashboard: React.FC = () => {
     .slice(0, 5);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-fadeIn">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Welcome back, {state.user.name}!</h1>
-        <p className="text-gray-600 mt-1">
-          Here's what's happening with your files today. You have {state.files.length} files in your collection.
+      <div className="animate-slideInDown">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+          Welcome back, {state.user.name}! 👋
+        </h1>
+        <p className="text-gray-600 mt-2 text-lg">
+          Here's what's happening with your files today. You have <span className="font-semibold text-primary-600">{state.files.length}</span> files in your collection.
         </p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        {stats.map((stat) => {
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+        {stats.map((stat, index) => {
           const Icon = stat.icon;
           return (
-            <div key={stat.name} className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-              <div className="flex items-center">
-                <div className={`w-12 h-12 ${stat.bgColor} rounded-lg flex items-center justify-center mr-3`}>
-                  <Icon className={`w-6 h-6 ${stat.color}`} />
+            <div 
+              key={stat.name} 
+              className="group bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-lg hover:scale-105 transition-all duration-300 animate-slideInUp"
+              style={{ animationDelay: `${index * 100}ms` }}
+            >
+              <div className="flex flex-col sm:flex-row items-center sm:items-start">
+                <div className={`w-12 h-12 sm:w-14 sm:h-14 ${stat.bgColor} rounded-xl flex items-center justify-center mb-3 sm:mb-0 sm:mr-4 group-hover:scale-110 transition-transform duration-300`}>
+                  <Icon className={`w-6 h-6 sm:w-7 sm:h-7 ${stat.color}`} />
                 </div>
-                <div>
-                  <p className="text-2xl font-bold text-gray-900">{stat.count}</p>
-                  <p className="text-sm text-gray-600">{stat.name}</p>
+                <div className="text-center sm:text-left">
+                  <p className="text-2xl sm:text-3xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors duration-300">{stat.count}</p>
+                  <p className="text-xs sm:text-sm text-gray-600 font-medium">{stat.name}</p>
                 </div>
               </div>
             </div>
@@ -129,29 +135,36 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* Smart Suggestions */}
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-900">Smart Suggestions</h2>
-          <button className="text-primary-600 hover:text-primary-700 text-sm font-medium">
+      <div className="animate-slideInUp">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-semibold text-gray-900 flex items-center">
+            <span className="w-2 h-2 bg-primary-500 rounded-full mr-3 animate-pulse"></span>
+            Smart Suggestions
+          </h2>
+          <button className="text-primary-600 hover:text-primary-700 text-sm font-medium hover:scale-105 transition-transform duration-200">
             View All →
           </button>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {suggestions.map((suggestion) => {
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+          {suggestions.map((suggestion, index) => {
             const Icon = suggestion.icon;
             return (
-              <div key={suggestion.title} className="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-                <div className="flex items-start space-x-3">
-                  <div className={`w-10 h-10 ${suggestion.bgColor} rounded-lg flex items-center justify-center flex-shrink-0`}>
-                    <Icon className={`w-5 h-5 ${suggestion.color}`} />
+              <div 
+                key={suggestion.title} 
+                className="group bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-lg hover:scale-102 transition-all duration-300 animate-slideInUp"
+                style={{ animationDelay: `${index * 150}ms` }}
+              >
+                <div className="flex items-start space-x-3 sm:space-x-4">
+                  <div className={`w-10 h-10 sm:w-12 sm:h-12 ${suggestion.bgColor} rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}>
+                    <Icon className={`w-5 h-5 sm:w-6 sm:h-6 ${suggestion.color}`} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-sm font-medium text-gray-900 mb-1">{suggestion.title}</h3>
-                    <p className="text-sm text-gray-600 mb-3">{suggestion.description}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-500">{suggestion.size}</span>
-                      <button className="px-3 py-1 bg-primary-600 text-white text-xs rounded-md hover:bg-primary-700 transition-colors">
+                    <h3 className="text-sm sm:text-base font-semibold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors duration-300">{suggestion.title}</h3>
+                    <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4 leading-relaxed">{suggestion.description}</p>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
+                      <span className="text-xs sm:text-sm font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-md self-start">{suggestion.size}</span>
+                      <button className="px-3 py-2 sm:px-4 sm:py-2 bg-gradient-to-r from-primary-600 to-primary-700 text-white text-xs sm:text-sm font-medium rounded-lg hover:from-primary-700 hover:to-primary-800 hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md">
                         {suggestion.action}
                       </button>
                     </div>
@@ -167,14 +180,19 @@ const Dashboard: React.FC = () => {
       <FileUpload />
 
       {/* Recent Files */}
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-900">Recently Added Files</h2>
-          <button className="text-primary-600 hover:text-primary-700 text-sm font-medium">
+      <div className="animate-slideInUp">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-xl font-semibold text-gray-900 flex items-center">
+            <span className="w-2 h-2 bg-green-500 rounded-full mr-3 animate-pulse"></span>
+            Recently Added Files
+          </h2>
+          <button className="text-primary-600 hover:text-primary-700 text-sm font-medium hover:scale-105 transition-transform duration-200">
             View All →
           </button>
         </div>
-        <FileList files={recentFiles} />
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <FileList files={recentFiles} />
+        </div>
       </div>
     </div>
   );

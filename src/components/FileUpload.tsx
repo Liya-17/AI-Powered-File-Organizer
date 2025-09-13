@@ -70,37 +70,44 @@ const FileUpload: React.FC = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <div className="text-center mb-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">Upload Your Files</h3>
-        <p className="text-gray-600">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 animate-slideInUp">
+      <div className="text-center mb-8">
+        <h3 className="text-2xl font-bold text-gray-900 mb-3 flex items-center justify-center">
+          <span className="w-2 h-2 bg-primary-500 rounded-full mr-3 animate-pulse"></span>
+          Upload Your Files
+        </h3>
+        <p className="text-gray-600 text-lg">
           Drag and drop your files here or click to browse. Our AI will automatically organize them for you.
         </p>
       </div>
 
       <div
         {...getRootProps()}
-        className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
+        className={`group border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all duration-300 hover:scale-102 ${
           isDragActive
-            ? 'border-primary-500 bg-primary-50'
-            : 'border-gray-300 hover:border-primary-400 hover:bg-gray-50'
+            ? 'border-primary-500 bg-gradient-to-br from-primary-50 to-primary-100 scale-105 shadow-lg'
+            : 'border-gray-300 hover:border-primary-400 hover:bg-gradient-to-br hover:from-gray-50 hover:to-primary-50 hover:shadow-md'
         }`}
       >
         <input {...getInputProps()} />
         
-        <div className="flex flex-col items-center space-y-4">
-          <Upload className="w-12 h-12 text-gray-400" />
+        <div className="flex flex-col items-center space-y-6">
+          <div className={`transition-all duration-300 ${isDragActive ? 'scale-110 animate-bounce' : 'group-hover:scale-110'}`}>
+            <Upload className={`w-16 h-16 transition-colors duration-300 ${
+              isDragActive ? 'text-primary-600' : 'text-gray-400 group-hover:text-primary-500'
+            }`} />
+          </div>
           
           {isDragActive ? (
-            <div>
-              <p className="text-lg font-medium text-primary-600">Drop files here</p>
+            <div className="animate-fadeIn">
+              <p className="text-xl font-semibold text-primary-600 mb-2">Drop files here</p>
               <p className="text-sm text-gray-500">Release to upload</p>
             </div>
           ) : (
             <div>
-              <p className="text-lg font-medium text-gray-700">Drag files here</p>
-              <p className="text-sm text-gray-500">or</p>
-              <button className="mt-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
+              <p className="text-xl font-semibold text-gray-700 mb-2">Drag files here</p>
+              <p className="text-sm text-gray-500 mb-4">or</p>
+              <button className="px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg hover:from-primary-700 hover:to-primary-800 hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md font-medium">
                 Browse Files
               </button>
             </div>
@@ -108,16 +115,24 @@ const FileUpload: React.FC = () => {
         </div>
       </div>
 
-      <div className="mt-4 text-center">
-        <p className="text-xs text-gray-500">Supports all file types up to 100MB</p>
+      <div className="mt-6 text-center">
+        <p className="text-sm text-gray-500 bg-gray-100 px-4 py-2 rounded-full inline-block">
+          Supports all file types up to 100MB
+        </p>
       </div>
 
       {/* Supported file types */}
-      <div className="mt-6 grid grid-cols-2 md:grid-cols-5 gap-4">
-        {['Images', 'Videos', 'Audio', 'Documents', 'Archives'].map((category) => (
-          <div key={category} className="flex flex-col items-center p-3 bg-gray-50 rounded-lg">
-            {getFileIcon(category)}
-            <span className="text-xs text-gray-600 mt-1">{category}</span>
+      <div className="mt-6 sm:mt-8 grid grid-cols-3 sm:grid-cols-5 gap-3 sm:gap-4">
+        {['Images', 'Videos', 'Audio', 'Documents', 'Archives'].map((category, index) => (
+          <div 
+            key={category} 
+            className="group flex flex-col items-center p-3 sm:p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl hover:from-primary-50 hover:to-primary-100 transition-all duration-300 hover:scale-105 hover:shadow-md animate-slideInUp"
+            style={{ animationDelay: `${index * 100}ms` }}
+          >
+            <div className="group-hover:scale-110 transition-transform duration-300">
+              {getFileIcon(category)}
+            </div>
+            <span className="text-xs sm:text-sm text-gray-600 mt-2 font-medium group-hover:text-primary-600 transition-colors duration-300 text-center">{category}</span>
           </div>
         ))}
       </div>

@@ -12,20 +12,46 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { state } = useApp();
 
   return (
-    <div className="flex h-screen bg-gray-50">
-      <Sidebar />
+    <div className="flex h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 overflow-hidden">
+      {/* Sidebar */}
+      <div className="relative z-30">
+        <Sidebar />
+      </div>
       
-      <div className={`flex-1 flex flex-col transition-all duration-300 ${
-        state.sidebarOpen ? 'ml-0' : 'ml-0'
+      {/* Main Content Area */}
+      <div className={`flex-1 flex flex-col transition-all duration-500 ease-in-out ${
+        state.sidebarOpen ? 'lg:ml-0' : 'lg:ml-0'
       }`}>
-        <Header />
+        {/* Header */}
+        <div className="relative z-20">
+          <Header />
+        </div>
         
-        <main className="flex-1 overflow-auto p-6">
-          {children}
+        {/* Main Content */}
+        <main className="flex-1 overflow-auto relative">
+          {/* Background Pattern */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `radial-gradient(circle at 1px 1px, rgba(59, 130, 246, 0.3) 1px, transparent 0)`,
+              backgroundSize: '20px 20px'
+            }}></div>
+          </div>
+          
+          {/* Content Container */}
+          <div className="relative z-10 p-4 sm:p-6 lg:p-8 xl:p-10">
+            <div className="max-w-7xl mx-auto">
+              <div className="animate-fadeIn">
+                {children}
+              </div>
+            </div>
+          </div>
         </main>
       </div>
       
-      <Chatbot />
+      {/* Chatbot */}
+      <div className="relative z-40">
+        <Chatbot />
+      </div>
     </div>
   );
 };

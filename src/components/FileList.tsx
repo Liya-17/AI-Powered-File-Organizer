@@ -73,49 +73,55 @@ const FileList: React.FC<FileListProps> = ({ files, showActions = true }) => {
 
   if (files.length === 0) {
     return (
-      <div className="text-center py-12">
-        <File className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-        <h3 className="text-lg font-medium text-gray-900 mb-2">No files found</h3>
-        <p className="text-gray-500">Upload some files to get started</p>
+      <div className="text-center py-16 animate-fadeIn">
+        <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <File className="w-10 h-10 text-gray-400" />
+        </div>
+        <h3 className="text-xl font-semibold text-gray-900 mb-3">No files found</h3>
+        <p className="text-gray-500 text-lg">Upload some files to get started</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden animate-fadeIn">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+          <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 Name
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 Type
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 Size
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                 Last Modified
               </th>
               {showActions && (
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Actions
                 </th>
               )}
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {files.map((file) => (
-              <tr key={file.id} className="hover:bg-gray-50 transition-colors">
-                <td className="px-6 py-4 whitespace-nowrap">
+            {files.map((file, index) => (
+              <tr 
+                key={file.id} 
+                className="hover:bg-gradient-to-r hover:from-gray-50 hover:to-primary-50 transition-all duration-200 group"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
+                <td className="px-6 py-5 whitespace-nowrap">
                   <div className="flex items-center">
-                    <div className="flex-shrink-0 w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center mr-3">
+                    <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-200">
                       {getFileIcon(file)}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate">
+                      <p className="text-sm font-semibold text-gray-900 truncate group-hover:text-primary-600 transition-colors duration-200">
                         {file.name}
                       </p>
                       <p className="text-sm text-gray-500 truncate">
@@ -124,61 +130,61 @@ const FileList: React.FC<FileListProps> = ({ files, showActions = true }) => {
                     </div>
                     <button
                       onClick={() => toggleStar(file.id)}
-                      className="ml-2 p-1 rounded hover:bg-gray-100 transition-colors"
+                      className="ml-3 p-2 rounded-lg hover:bg-yellow-50 transition-all duration-200 hover:scale-110"
                     >
                       <Star 
-                        className={`w-4 h-4 ${
-                          file.starred ? 'text-yellow-400 fill-current' : 'text-gray-400'
+                        className={`w-4 h-4 transition-colors duration-200 ${
+                          file.starred ? 'text-yellow-400 fill-current' : 'text-gray-400 group-hover:text-yellow-300'
                         }`} 
                       />
                     </button>
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                <td className="px-6 py-5 whitespace-nowrap">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 group-hover:from-primary-100 group-hover:to-primary-200 group-hover:text-primary-700 transition-all duration-200">
                     {file.category}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <td className="px-6 py-5 whitespace-nowrap text-sm font-medium text-gray-900">
                   {formatFileSize(file.size)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-5 whitespace-nowrap text-sm text-gray-500">
                   {formatDate(file.lastModified)}
                 </td>
                 {showActions && (
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <div className="flex items-center space-x-2">
+                  <td className="px-6 py-5 whitespace-nowrap text-sm font-medium">
+                    <div className="flex items-center space-x-1">
                       <button
                         onClick={() => handleFileAction('view', file.id)}
-                        className="text-gray-400 hover:text-gray-600 transition-colors"
+                        className="p-2 text-gray-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-all duration-200 hover:scale-110"
                         title="View"
                       >
                         <Eye className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => handleFileAction('download', file.id)}
-                        className="text-gray-400 hover:text-gray-600 transition-colors"
+                        className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-all duration-200 hover:scale-110"
                         title="Download"
                       >
                         <Download className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => handleFileAction('share', file.id)}
-                        className="text-gray-400 hover:text-gray-600 transition-colors"
+                        className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 hover:scale-110"
                         title="Share"
                       >
                         <Share2 className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => handleFileAction('delete', file.id)}
-                        className="text-gray-400 hover:text-red-600 transition-colors"
+                        className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200 hover:scale-110"
                         title="Delete"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => handleFileAction('more', file.id)}
-                        className="text-gray-400 hover:text-gray-600 transition-colors"
+                        className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-lg transition-all duration-200 hover:scale-110"
                         title="More options"
                       >
                         <MoreVertical className="w-4 h-4" />
