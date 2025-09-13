@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # FileOrganizerAI - Professional AI-Powered File Management
 
 A modern, professional file organization application built with React, TypeScript, and Tailwind CSS. Features AI-powered file categorization, intelligent search, duplicate detection, and cloud backup integration.
@@ -221,3 +222,6 @@ For support, email support@fileorganizerai.com or join our Slack channel.
 ---
 
 Built with ❤️ by the FileOrganizerAI team
+=======
+# AI-Powered-File-Organizer
+>>>>>>> e9e6c189c5599d585cd987a8e0e99e28ab17e59a
