@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NexusFile AI — AI-powered file organizer with intelligent categorization, smart search, and document generation">
+    <title>NexusFile AI — Intelligent File Organizer</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+<div class="app-container">
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <div class="logo-icon">⚡</div>
+                <div class="logo-text">
+                    <span class="logo-title">NexusFile</span>
+                    <span class="logo-subtitle">AI Powered</span>
+                </div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-label">Main</div>
+            <div class="nav-item active" data-page="dashboard" id="nav-dashboard">
+                <span class="nav-icon">📊</span>
+                <span>Dashboard</span>
+            </div>
+            <div class="nav-item" data-page="files" id="nav-files">
+                <span class="nav-icon">📁</span>
+                <span>My Files</span>
+                <span class="nav-badge" id="files-count">0</span>
+            </div>
+            <div class="nav-item" data-page="upload" id="nav-upload">
+                <span class="nav-icon">📤</span>
+                <span>Upload</span>
+            </div>
+
+            <div class="nav-section-label">AI Tools</div>
+            <div class="nav-item" data-page="generate" id="nav-generate">
+                <span class="nav-icon">✨</span>
+                <span>Generate</span>
+            </div>
+            <div class="nav-item" data-page="templates" id="nav-templates">
+                <span class="nav-icon">📋</span>
+                <span>Templates</span>
+            </div>
+            <div class="nav-item" data-page="generated" id="nav-generated">
+                <span class="nav-icon">📑</span>
+                <span>Generated Docs</span>
+            </div>
+
+            <div class="nav-section-label">System</div>
+            <div class="nav-item" data-page="settings" id="nav-settings">
+                <span class="nav-icon">⚙️</span>
+                <span>Settings</span>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="api-status">
+                <span class="status-dot" id="api-status-dot"></span>
+                <span id="api-status-text">Gemini AI Connected</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ==================== MAIN ==================== -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <button class="header-btn" id="menu-toggle" style="display:none;">☰</button>
+                <h1 class="page-title" id="page-title">Dashboard</h1>
+            </div>
+            <div class="header-right">
+                <div class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="global-search" placeholder="Search files with AI..." autocomplete="off">
+                </div>
+                <button class="header-btn" id="btn-organize" title="Auto-organize files">📂</button>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <div class="content-area">
+
+            <!-- ===== DASHBOARD ===== -->
+            <section class="page-section active" id="page-dashboard">
+                <div class="stats-grid" id="stats-grid">
+                    <div class="glass-card stat-card">
+                        <span class="stat-icon">📁</span>
+                        <div class="stat-value" id="stat-total-files">0</div>
+                        <div class="stat-label">Total Files</div>
+                    </div>
+                    <div class="glass-card stat-card">
+                        <span class="stat-icon">💾</span>
+                        <div class="stat-value" id="stat-total-size">0 B</div>
+                        <div class="stat-label">Storage Used</div>
+                    </div>
+                    <div class="glass-card stat-card">
+                        <span class="stat-icon">✨</span>
+                        <div class="stat-value" id="stat-generated">0</div>
+                        <div class="stat-label">Documents Generated</div>
+                    </div>
+                    <div class="glass-card stat-card">
+                        <span class="stat-icon">🏷️</span>
+                        <div class="stat-value" id="stat-categories">0</div>
+                        <div class="stat-label">Categories</div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="glass-card" style="padding: 24px;">
+                        <div class="section-header">
+                            <div class="section-title"><span class="icon">📈</span> Storage by Category</div>
+                        </div>
+                        <div class="chart-container" id="category-chart"></div>
+                    </div>
+                    <div class="glass-card" style="padding: 24px;">
+                        <div class="section-header">
+                            <div class="section-title"><span class="icon">⏱️</span> Recent Activity</div>
+                        </div>
+                        <ul class="activity-list" id="activity-list"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== FILES ===== -->
+            <section class="page-section" id="page-files">
+                <div class="files-toolbar" id="files-toolbar">
+                    <button class="filter-chip active" data-cat="All">All</button>
+                </div>
+                <div class="files-grid" id="files-grid"></div>
+                <div class="empty-state" id="files-empty" style="display:none;">
+                    <span class="empty-icon">📂</span>
+                    <h3>No files yet</h3>
+                    <p>Upload some files to get started with AI-powered organization!</p>
+                </div>
+            </section>
+
+            <!-- ===== UPLOAD ===== -->
+            <section class="page-section" id="page-upload">
+                <div class="upload-zone" id="upload-zone">
+                    <span class="upload-icon">☁️</span>
+                    <h3>Drag & drop files here</h3>
+                    <p>or <span class="browse-link" id="browse-link">browse your computer</span></p>
+                    <p style="margin-top: 8px; font-size: 12px; color: var(--text-muted);">
+                        Supports documents, images, code, data files and more (up to 50MB)
+                    </p>
+                    <input type="file" id="file-input" multiple hidden>
+                    <div class="upload-progress" id="upload-progress" style="display:none;">
+                        <div class="progress-bar-track">
+                            <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+                        </div>
+                        <div class="progress-text" id="progress-text">Uploading...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== GENERATE ===== -->
+            <section class="page-section" id="page-generate">
+                <div class="generate-tabs">
+                    <button class="gen-tab active" data-type="ppt">📊 PowerPoint</button>
+                    <button class="gen-tab" data-type="pdf">📄 PDF Report</button>
+                    <button class="gen-tab" data-type="excel">📈 Excel</button>
+                    <button class="gen-tab" data-type="docx">📝 Word Doc</button>
+                </div>
+                <div class="generate-form glass-card" style="padding: 32px;">
+                    <div class="form-group">
+                        <label class="form-label" for="gen-title">Document Title</label>
+                        <input class="form-input" id="gen-title" placeholder="e.g. Q4 Sales Report, Marketing Plan..." autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="gen-prompt">Describe what you want AI to generate</label>
+                        <textarea class="form-textarea" id="gen-prompt" placeholder="e.g. Create a 10-slide presentation about machine learning trends in 2026, including data on adoption rates, key technologies, and future predictions..."></textarea>
+                    </div>
+                    <button class="btn btn-primary" id="btn-generate">
+                        <span>✨</span> Generate with AI
+                    </button>
+                </div>
+            </section>
+
+            <!-- ===== TEMPLATES ===== -->
+            <section class="page-section" id="page-templates">
+                <div class="templates-grid" id="templates-grid"></div>
+            </section>
+
+            <!-- ===== GENERATED DOCS ===== -->
+            <section class="page-section" id="page-generated">
+                <div class="generated-list" id="generated-list"></div>
+                <div class="empty-state" id="generated-empty" style="display:none;">
+                    <span class="empty-icon">✨</span>
+                    <h3>No generated documents yet</h3>
+                    <p>Use the Generate or Templates tabs to create documents with AI!</p>
+                </div>
+            </section>
+
+            <!-- ===== SETTINGS ===== -->
+            <section class="page-section" id="page-settings">
+                <div class="settings-section">
+                    <div class="settings-group">
+                        <h3>⚙️ Application Settings</h3>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-name">Auto-organize on upload</div>
+                                <div class="setting-desc">Automatically organize files into category folders</div>
+                            </div>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-name">AI Model</div>
+                                <div class="setting-desc">Gemini 2.0 Flash (fast, efficient)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-group">
+                        <h3>📂 Storage</h3>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-name">Upload Folder</div>
+                                <div class="setting-desc" style="font-family: var(--font-mono); font-size: 11px;">./uploads/</div>
+                            </div>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-name">Generated Folder</div>
+                                <div class="setting-desc" style="font-family: var(--font-mono); font-size: 11px;">./generated/</div>
+                            </div>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <div class="setting-name">Organized Folder</div>
+                                <div class="setting-desc" style="font-family: var(--font-mono); font-size: 11px;">./organized/</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-group">
+                        <h3>ℹ️ About</h3>
+                        <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.7;">
+                            <strong>NexusFile AI</strong> v1.0.0<br>
+                            An AI-powered file organizer with intelligent categorization, smart search, and document generation.<br><br>
+                            Powered by Google Gemini AI 🧠
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</div>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="modal">
+        <div class="modal-header">
+            <h2 class="modal-title" id="modal-title">Modal</h2>
+            <button class="modal-close" id="modal-close">✕</button>
+        </div>
+        <div class="modal-body" id="modal-body"></div>
+        <div class="modal-footer" id="modal-footer"></div>
+    </div>
+</div>
+
+<!-- ===== TOAST CONTAINER ===== -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- ===== LOADING OVERLAY ===== -->
+<div class="loading-overlay" id="loading-overlay">
+    <div class="loading-spinner"></div>
+    <div class="loading-text" id="loading-text">Processing...</div>
+</div>
+
+<!-- ===== FLOATING ACTION BUTTON ===== -->
+<div class="fab-container" id="fab-container">
+    <div class="fab-menu">
+        <button class="fab-menu-item" data-action="upload">
+            <span class="fab-item-icon">📤</span> Upload Files
+        </button>
+        <button class="fab-menu-item" data-action="generate">
+            <span class="fab-item-icon">✨</span> Generate Doc
+        </button>
+        <button class="fab-menu-item" data-action="organize">
+            <span class="fab-item-icon">📂</span> Auto-Organize
+        </button>
+    </div>
+    <button class="fab" id="fab-btn">+</button>
+</div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
